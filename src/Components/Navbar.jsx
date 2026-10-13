@@ -16,12 +16,12 @@ const Navbar = () => {
 
   return (
     <nav className="fixed w-full top-0 z-50 ">
-      <div className="relative z-50 flex justify-between items-center h-14 mx-4 md:mx-6 mt-4 px-5 md:px-8 rounded-full border border-white/15 bg-[#0b2530]/80 backdrop-blur-md">
+      <div className="relative z-50 flex justify-between items-center h-14 mx-4 md:mx-6 mt-4 px-5 md:px-8 rounded-full">
         <div className="flex items-center space-x-2">
-          <span className="text-yellow-400">💙</span>
-          <h1 className="text-xs tracking-[0.3em] text-gray-300 font-medium uppercase">
-            T.F
-          </h1>
+          {/* <span className="text-yellow-400">💙</span> */}
+          {/* <h1 className="text-xs tracking-[0.3em] text-gray-300 font-medium uppercase">
+          Zion
+          </h1> */}
         </div>
 
         <div className="flex items-center space-x-6">
@@ -37,7 +37,7 @@ const Navbar = () => {
             className="text-white hover:text-cyan-400 transition-colors flex items-center space-x-3 group"
           >
             <span className="text-sm font-medium tracking-widest uppercase hidden md:inline">
-              {isOpen ? 'Close' : 'Menu'}
+              {/* {isOpen ? 'Close' : 'Menu'} */}
             </span>
             <div className="relative w-6 h-6 flex items-center justify-center">
               {isOpen ? <FaTimes size={24} /> : <FaBars size={24} />}

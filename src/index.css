@@ -1,0 +1,170 @@
+@import 'tailwindcss';
+
+@theme {
+  /* This defines your professional font globally */
+  --font-sans: 'Plus Jakarta Sans', ui-sans-serif, system-ui, sans-serif;
+
+  /* Custom branding colors if you want to use them as utility classes */
+  --color-brand-cyan: #22d3ee;
+  --color-dark-bg: #020b10;
+}
+
+@layer base {
+  /* 1. Hide the system cursor everywhere for the custom cursor effect */
+  html,
+  body,
+  * {
+    cursor: none !important;
+  }
+
+  /* 2. Smooth scrolling for your #contact and #projects links */
+  html {
+    scroll-behavior: smooth;
+  }
+
+  /* 3. Bring the cursor back for mobile users (touchscreens) */
+  @media (max-width: 768px) {
+    html,
+    body,
+    * {
+      cursor: auto !important;
+    }
+  }
+}
+
+/* ------------------------------------------------------------------
+   Page layout (from the wireframe)
+   - Home panel pinned top-left on every section ("always here")
+   - section title sits under the panel, content sits to the right
+------------------------------------------------------------------- */
+:root {
+  --nav-h: 72px; /* bottom edge of the floating nav pill */
+  --pw: clamp(340px, 30vw, 460px); /* Home panel width  */
+  --ph: clamp(300px, 40svh, 420px); /* Home panel height */
+  --gap: 28px;
+  --edge: 24px;
+}
+
+/* ---------- Home panel ---------- */
+.home-panel {
+  position: relative;
+  min-height: 100svh;
+  overflow: hidden;
+  background: radial-gradient(ellipse at top, #144e5a 0%, #061920 45%, #020b10 100%);
+  border-bottom-right-radius: 50% 48px;
+}
+.home-panel::after {
+  content: '';
+  position: absolute;
+  inset: 0;
+  pointer-events: none;
+  background: linear-gradient(150deg, rgba(96, 165, 250, 0.22), rgba(96, 165, 250, 0.04));
+  opacity: 0;
+  transition: opacity 0.7s;
+}
+.home-inner {
+  padding: 0 clamp(32px, 8vw, 128px);
+  max-width: 56rem;
+}
+.home-tag { margin-bottom: 2.5rem; font-size: 10px; }
+.home-name { font-size: clamp(2.25rem, 6vw, 4.5rem); margin-bottom: 1rem; }
+.home-sub { font-size: 12px; letter-spacing: 0.35em; max-width: 32rem; margin-bottom: 3rem; }
+.home-cta { font-size: 11px; letter-spacing: 0.2em; }
+
+@media (min-width: 1100px) {
+  .home-panel {
+    position: fixed;
+    z-index: 30;
+    top: 0;
+    left: 0;
+    width: 100vw;
+    height: 100svh;
+    min-height: 0;
+    border-bottom-right-radius: 0;
+    transition:
+      top 0.7s cubic-bezier(0.65, 0, 0.35, 1),
+      left 0.7s cubic-bezier(0.65, 0, 0.35, 1),
+      width 0.7s cubic-bezier(0.65, 0, 0.35, 1),
+      height 0.7s cubic-bezier(0.65, 0, 0.35, 1),
+      border-radius 0.7s cubic-bezier(0.65, 0, 0.35, 1),
+      box-shadow 0.7s;
+  }
+  .home-panel.is-shrunk {
+    top: var(--nav-h);
+    left: var(--edge);
+    width: var(--pw);
+    height: var(--ph);
+    border-bottom-right-radius: 42% 58%;
+    box-shadow:
+      inset 0 0 0 1px rgba(125, 190, 255, 0.45),
+      0 18px 50px rgba(0, 0, 0, 0.45);
+  }
+  .home-panel.is-shrunk::after { opacity: 1; }
+
+  .home-inner { transition: padding 0.7s cubic-bezier(0.65, 0, 0.35, 1); }
+  .home-name { transition: font-size 0.7s cubic-bezier(0.65, 0, 0.35, 1), margin 0.7s; }
+  .home-tag, .home-sub, .home-cta { transition: all 0.7s cubic-bezier(0.65, 0, 0.35, 1); }
+  .home-scroll { transition: opacity 0.4s; }
+
+  .is-shrunk .home-inner { padding: 0 28px; }
+  .is-shrunk .home-name { font-size: 1.9rem; margin-bottom: 0.5rem; }
+  .is-shrunk .home-tag { margin-bottom: 1rem; font-size: 9px; }
+  .is-shrunk .home-sub { font-size: 9px; letter-spacing: 0.25em; margin-bottom: 1.5rem; }
+  .is-shrunk .home-cta { font-size: 10px; }
+  .is-shrunk .home-scroll { opacity: 0; pointer-events: none; }
+}
+
+/* ---------- Sections ---------- */
+.sec {
+  padding: 5rem 24px;
+}
+.sec-title { margin-bottom: 2rem; }
+.sec-body { min-width: 0; }
+
+@media (min-width: 1100px) {
+  .page { padding: 0 var(--edge); }
+  .sec {
+    display: grid;
+    grid-template-columns: var(--pw) minmax(0, 1fr);
+    column-gap: calc(var(--gap) + 24px);
+    min-height: 100svh;
+    padding: var(--nav-h) 0 6rem;
+    max-width: 90rem;
+    margin: 0 auto;
+  }
+  /* title waits under the Home panel and stays there while the section scrolls */
+  .sec-title {
+    position: sticky;
+    top: calc(var(--nav-h) + var(--ph) + var(--gap));
+    margin: calc(var(--ph) + var(--gap)) 0 0;
+    padding-left: 4px;
+  }
+  .sec-body { padding-top: 12px; padding-right: 4px; }
+}
+
+/* ---------- Colour-coded blocks (blue / lavender / mint from the wireframe) ---------- */
+.card-violet {
+  background: rgba(139, 120, 255, 0.10);
+  border: 1px solid rgba(167, 150, 255, 0.35);
+  border-radius: 1rem;
+  transition: background 0.4s, border-color 0.4s, transform 0.4s;
+}
+.card-violet:hover {
+  background: rgba(139, 120, 255, 0.16);
+  border-color: rgba(190, 175, 255, 0.6);
+}
+.tile-mint {
+  background: rgba(52, 211, 153, 0.08);
+  border: 1px solid rgba(52, 211, 153, 0.4);
+  border-radius: 1rem;
+  transition: transform 0.4s, background 0.4s, border-color 0.4s;
+}
+.tile-mint:hover {
+  transform: translateY(-6px);
+  background: rgba(52, 211, 153, 0.14);
+  border-color: rgba(110, 231, 183, 0.8);
+}
+.tile-mint-solid {
+  background: rgb(110, 231, 183);
+  color: #03221a;
+}

@@ -33,7 +33,7 @@ const Navbar = () => {
           RIGHT of the Home panel, so it never covers the panel. */}
       <div
         aria-hidden="true"
-        className={`pointer-events-none absolute inset-x-0 top-0 h-[90px] left-[var(--pw)] bg-[linear-gradient(to_bottom,#ffffff_0%,#ffffff_50%,transparent_100%)] transition-opacity duration-300 ${
+        className={`pointer-events-none absolute inset-x-0 top-0 h-[90px] min-[1100px]:left-[var(--pw)] bg-[linear-gradient(to_bottom,#ffffff_0%,#ffffff_50%,transparent_100%)] transition-opacity duration-300 ${
           scrolled ? 'opacity-100' : 'opacity-0'
         }`}
       />
@@ -88,7 +88,7 @@ const Navbar = () => {
             <li key={item} className="relative group w-fit">
               <a
                 href={`#${item.toLowerCase()}`}
-                className="text-4xl md:text-5xl font-bold text-[#707070] group-hover:text-[#333333] transition-colors duration-300 block"
+                className="text-4xl md:text-4xl font-bold text-[#707070] group-hover:text-[#333333] transition-colors duration-300 block"
                 onClick={() => setIsOpen(false)}
               >
                 {item}

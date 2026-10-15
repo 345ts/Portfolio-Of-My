@@ -13,19 +13,16 @@
 }
 
 @layer base {
-  /* 1. Hide the system cursor everywhere for the custom cursor effect */
   html,
   body,
   * {
     cursor: none !important;
   }
 
-  /* 2. Smooth scrolling for your #contact and #projects links */
   html {
     scroll-behavior: smooth;
   }
 
-  /* 3. Bring the cursor back for mobile users (touchscreens) */
   @media (max-width: 768px) {
     html,
     body,
@@ -35,9 +32,6 @@
   }
 }
 
-/* ------------------------------------------------------------------
-   Elegant Minimalism: page colours
-------------------------------------------------------------------- */
 html,
 body {
   background: #ffffff;
@@ -47,7 +41,6 @@ body {
   background-image: none !important;
   color: #333333 !important;
 }
-/* the dark vignette overlay from the old theme */
 #root > div > div.absolute.inset-0 {
   display: none !important;
 }
@@ -56,142 +49,115 @@ body {
   color: #ffffff;
 }
 
-/* ------------------------------------------------------------------
-   Page layout (same on phone and desktop)
-   - Home panel pinned top-left on every section
-   - section title sits under the panel, content sits to the right
-   Phone sizes are the defaults; desktop sizes are in the 1100px block.
-------------------------------------------------------------------- */
 :root {
   --nav-h: 72px;
-  --pw: clamp(150px, 42vw, 780px); /* panel width */
-  --ph: clamp(240px, 42svh, 660px); /* panel height */
-  --gap: 14px;
-  --edge: 8px;
-}
-
-@media (min-width: 1100px) {
-  :root {
-    --pw: clamp(520px, 46vw, 780px);
-    --ph: clamp(460px, 66svh, 660px);
-    --gap: 28px;
-    --edge: 24px;
-  }
+  --pw: clamp(520px, 46vw, 780px);
+  --ph: clamp(460px, 66svh, 660px);
+  --gap: 28px;
+  --edge: 24px;
 }
 
 /* ---------- Home panel ---------- */
 .home-panel {
-  position: fixed;
-  z-index: 30;
-  top: 0;
-  left: 0;
-  width: 100vw;
-  height: 100svh;
-  min-height: 0;
+  position: relative;
+  min-height: 100svh;
   overflow: hidden;
   background: #333333;
   color: #ffffff;
-  border-bottom-right-radius: 0;
-  transition:
-    width 0.7s cubic-bezier(0.65, 0, 0.35, 1),
-    height 0.7s cubic-bezier(0.65, 0, 0.35, 1),
-    border-radius 0.7s cubic-bezier(0.65, 0, 0.35, 1);
+  border-bottom-right-radius: 50% 48px;
+  display: flex;
+  flex-direction: column;
 }
-.home-panel.is-shrunk {
-  width: var(--pw);
-  height: var(--ph);
-  border-bottom-right-radius: 42% 58%;
-}
-
+/* makes the content fill the panel so it is centred (small screens) */
+.home-panel > section { flex: 1 1 auto; }
 .home-inner {
-  padding: 0 clamp(20px, 8vw, 128px);
+  /* top padding keeps the text clear of the top bar on small screens */
+  padding: 6rem clamp(24px, 8vw, 128px) 4rem;
   max-width: 56rem;
-  transition: padding 0.7s cubic-bezier(0.65, 0, 0.35, 1);
 }
-.home-tag { margin-bottom: 2rem; font-size: 10px; }
-.home-name {
-  font-size: clamp(2.25rem, 6vw, 4.5rem);
-  margin-bottom: 1rem;
-  transition: font-size 0.7s cubic-bezier(0.65, 0, 0.35, 1), margin 0.7s;
-}
-.home-sub { font-size: 12px; letter-spacing: 0.35em; max-width: 32rem; margin-bottom: 2.5rem; }
+.home-tag { margin-bottom: 2.5rem; font-size: 10px; }
+.home-name { font-size: clamp(2.25rem, 6vw, 4.5rem); margin-bottom: 1rem; }
+.home-sub { font-size: 12px; letter-spacing: 0.35em; max-width: 32rem; margin-bottom: 3rem; }
 .home-cta { font-size: 11px; letter-spacing: 0.2em; }
-.home-tag, .home-sub, .home-cta { transition: all 0.7s cubic-bezier(0.65, 0, 0.35, 1); }
-.home-scroll { transition: opacity 0.4s; }
-
-/* shrunk (phone sizes) */
-.is-shrunk .home-inner { padding: 0 14px; }
-.is-shrunk .home-name { font-size: 1.25rem; margin-bottom: 0.5rem; }
-.is-shrunk .home-tag { margin-bottom: 0.75rem; }
-.is-shrunk .home-tag span { letter-spacing: 0.2em; font-size: 8px; }
-.is-shrunk .home-sub { display: none; }
-.is-shrunk .home-cta { font-size: 10px; }
-.is-shrunk .home-scroll { opacity: 0; pointer-events: none; }
 
 @media (min-width: 1100px) {
-  .home-inner { padding: 0 clamp(32px, 8vw, 128px); }
-  .home-tag { margin-bottom: 2.5rem; }
-  .home-sub { margin-bottom: 3rem; }
+  .home-panel {
+    position: fixed;
+    z-index: 30;
+    top: 0;
+    left: 0;
+    width: 100vw;
+    height: 100svh;
+    min-height: 0;
+    border-bottom-right-radius: 0;
+    transition:
+      width 0.7s cubic-bezier(0.65, 0, 0.35, 1),
+      height 0.7s cubic-bezier(0.65, 0, 0.35, 1),
+      border-radius 0.7s cubic-bezier(0.65, 0, 0.35, 1);
+  }
+  .home-panel.is-shrunk {
+    width: var(--pw);
+    height: var(--ph);
+    border-bottom-right-radius: 42% 58%;
+  }
 
-  /* shrunk (desktop sizes) */
+  .home-inner {
+    padding: 0 clamp(32px, 8vw, 128px);
+    transition: padding 0.7s cubic-bezier(0.65, 0, 0.35, 1);
+  }
+  .home-name { transition: font-size 0.7s cubic-bezier(0.65, 0, 0.35, 1), margin 0.7s; }
+  .home-tag, .home-sub, .home-cta { transition: all 0.7s cubic-bezier(0.65, 0, 0.35, 1); }
+  .home-scroll { transition: opacity 0.4s; }
+
   .is-shrunk .home-inner { padding: 0 56px; }
   .is-shrunk .home-name { font-size: 2.6rem; margin-bottom: 0.75rem; }
-  .is-shrunk .home-tag { margin-bottom: 1.25rem; }
-  .is-shrunk .home-tag span { letter-spacing: 0.5em; font-size: inherit; }
-  .is-shrunk .home-sub { display: block; font-size: 10px; letter-spacing: 0.25em; margin-bottom: 1.75rem; }
+  .is-shrunk .home-tag { margin-bottom: 1.25rem; font-size: 10px; }
+  .is-shrunk .home-sub { font-size: 10px; letter-spacing: 0.25em; margin-bottom: 1.75rem; }
   .is-shrunk .home-cta { font-size: 11px; }
+  .is-shrunk .home-scroll { opacity: 0; pointer-events: none; }
 }
 
 /* ---------- Sections ---------- */
-.page { padding: 0 var(--edge); }
-
 .sec {
-  display: grid;
-  grid-template-columns: var(--pw) minmax(0, 1fr);
-  column-gap: 12px;
-  min-height: 100svh;
-  padding: calc(var(--nav-h) + 1rem) 0 4rem;
-  max-width: 90rem;
-  margin: 0 auto;
+  padding: 5rem 24px;
 }
 .sec-title { margin-bottom: 2rem; }
-.sec-body { min-width: 0; grid-column: 2; padding-top: 12px; padding-right: 4px; }
-
-/* The title is pinned directly UNDER the Home panel and shown only for the
-   section being read (.is-active, set by usePanelScroll). */
-.sec-title {
-  position: fixed;
-  z-index: 20;
-  left: 14px;
-  top: calc(var(--ph) + var(--gap) + 12px);
-  width: calc(var(--pw) - 28px);
-  margin: 0;
-  padding: 0;
-  opacity: 0;
-  pointer-events: none;
-  transition: opacity 0.3s ease;
-}
-.sec-title h2 { font-size: 1.5rem; }
-.sec-title span { letter-spacing: 0.2em !important; }
-
-.panel-shrunk .sec.is-active .sec-title {
-  opacity: 1;
-  pointer-events: auto;
-  /* wait until the Home panel has finished shrinking, then fade in */
-  transition: opacity 0.4s ease 0.4s;
-}
+.sec-body { min-width: 0; }
 
 @media (min-width: 1100px) {
+  .page { padding: 0 var(--edge); }
   .sec {
+    display: grid;
+    grid-template-columns: var(--pw) minmax(0, 1fr);
     column-gap: calc(var(--gap) + 24px);
+    min-height: 100svh;
     padding: calc(var(--nav-h) + 2rem) 0 6rem;
+    max-width: 90rem;
+    margin: 0 auto;
   }
-  .sec-title { left: 56px; width: calc(var(--pw) - 88px); }
-  .sec-title h2 { font-size: 3rem; }
-  .sec-title span { letter-spacing: 0.5em !important; }
+
+  .sec-body { grid-column: 2; padding-top: 12px; padding-right: 4px; }
+
+  .sec-title {
+    position: fixed;
+    z-index: 20;
+    left: 56px;
+    top: calc(var(--ph) + var(--gap) + 12px);
+    width: calc(var(--pw) - 88px);
+    margin: 0;
+    padding: 0;
+    opacity: 0;
+    pointer-events: none;
+    transition: opacity 0.3s ease;
+  }
+  .panel-shrunk .sec.is-active .sec-title {
+    opacity: 1;
+    pointer-events: auto;
+    transition: opacity 0.4s ease 0.4s;
+  }
 }
 
-/* ---------- Soft grey blocks (cards, skill tiles, buttons) ---------- */
+/* ---------- Soft grey blocks ---------- */
 .card-soft {
   background: #f0f0f0;
   border: 1px solid #b0b0b0;

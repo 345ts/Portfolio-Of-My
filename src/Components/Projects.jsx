@@ -125,7 +125,7 @@ const Projects = () => {
       </div>
 
       {/* Projects */}
-      <div className="grid grid-cols-1 min-[1100px]:grid-cols-2 gap-6 items-start">
+      <div className="grid grid-cols-1 gap-6">
         {filteredProjects.map((project) => (
           <div
             key={project.name}

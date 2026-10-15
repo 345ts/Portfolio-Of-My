@@ -114,7 +114,7 @@ const Navbar = () => {
             >
               <FaLinkedin size={26} />
             </a>
-
+{/* 
             <a
               href="https://github.com/345ts"
               target="_blank"
@@ -122,7 +122,7 @@ const Navbar = () => {
               className="text-[#707070] hover:text-[#333333] hover:scale-110 transition-all"
             >
               <FaGithub size={26} />
-            </a>
+            </a> */}
 
             <a
               href="mailto:tsionfikre385@gmail.com"

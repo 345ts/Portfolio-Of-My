@@ -4,9 +4,12 @@
   /* This defines your professional font globally */
   --font-sans: 'Plus Jakarta Sans', ui-sans-serif, system-ui, sans-serif;
 
-  /* Custom branding colors if you want to use them as utility classes */
-  --color-brand-cyan: #22d3ee;
-  --color-dark-bg: #020b10;
+  /* Elegant Minimalism palette */
+  --color-em-white: #ffffff;
+  --color-em-mist: #f0f0f0;
+  --color-em-silver: #b0b0b0;
+  --color-em-slate: #707070;
+  --color-em-charcoal: #333333;
 }
 
 @layer base {
@@ -33,207 +36,184 @@
 }
 
 /* ------------------------------------------------------------------
-   Page layout (from the wireframe)
-   - Home panel pinned top-left on every section ("always here")
-   - section title sits under the panel, content sits to the right
+   Elegant Minimalism: page colours
 ------------------------------------------------------------------- */
-:root {
-  --nav-h: 72px; /* bottom edge of the floating nav pill */
-  --pw: clamp(430px, 38vw, 590px); /* Home panel width  (larger) */
-  --ph: clamp(370px, 53svh, 540px); /* Home panel height (larger) */
-  --gap: 28px;
-  --edge: 24px;
+html,
+body {
+  background: #ffffff;
+}
+#root > div {
+  background: #ffffff !important;
+  background-image: none !important;
+  color: #333333 !important;
+}
+/* the dark vignette overlay from the old theme */
+#root > div > div.absolute.inset-0 {
+  display: none !important;
+}
+::selection {
+  background: #333333;
+  color: #ffffff;
 }
 
-@property --fade { syntax: '<length>'; inherits: false; initial-value: 0px; }
-@property --t { syntax: '<number>'; inherits: false; initial-value: 0; }
+/* ------------------------------------------------------------------
+   Page layout (same on phone and desktop)
+   - Home panel pinned top-left on every section
+   - section title sits under the panel, content sits to the right
+   Phone sizes are the defaults; desktop sizes are in the 1100px block.
+------------------------------------------------------------------- */
+:root {
+  --nav-h: 72px;
+  --pw: clamp(150px, 42vw, 780px); /* panel width */
+  --ph: clamp(240px, 42svh, 660px); /* panel height */
+  --gap: 14px;
+  --edge: 8px;
+}
+
+@media (min-width: 1100px) {
+  :root {
+    --pw: clamp(520px, 46vw, 780px);
+    --ph: clamp(460px, 66svh, 660px);
+    --gap: 28px;
+    --edge: 24px;
+  }
+}
 
 /* ---------- Home panel ---------- */
 .home-panel {
-  position: relative;
-  min-height: 100svh;
+  position: fixed;
+  z-index: 30;
+  top: 0;
+  left: 0;
+  width: 100vw;
+  height: 100svh;
+  min-height: 0;
   overflow: hidden;
-  background: radial-gradient(ellipse at top, #144e5a 0%, #061920 45%, #020b10 100%);
-  border-bottom-right-radius: 50% 48px;
+  background: #333333;
+  color: #ffffff;
+  border-bottom-right-radius: 0;
+  transition:
+    width 0.7s cubic-bezier(0.65, 0, 0.35, 1),
+    height 0.7s cubic-bezier(0.65, 0, 0.35, 1),
+    border-radius 0.7s cubic-bezier(0.65, 0, 0.35, 1);
 }
-.home-panel::after {
-  content: '';
-  position: absolute;
-  inset: 0;
-  pointer-events: none;
-  background: linear-gradient(150deg, rgba(96, 165, 250, 0.22), rgba(96, 165, 250, 0.04));
-  opacity: 0;
-  transition: opacity 0.7s;
+.home-panel.is-shrunk {
+  width: var(--pw);
+  height: var(--ph);
+  border-bottom-right-radius: 42% 58%;
 }
+
 .home-inner {
-  padding: 0 clamp(32px, 8vw, 128px);
+  padding: 0 clamp(20px, 8vw, 128px);
   max-width: 56rem;
+  transition: padding 0.7s cubic-bezier(0.65, 0, 0.35, 1);
 }
-.home-tag { margin-bottom: 2.5rem; font-size: 10px; }
-.home-name { font-size: clamp(2.25rem, 6vw, 4.5rem); margin-bottom: 1rem; }
-.home-sub { font-size: 12px; letter-spacing: 0.35em; max-width: 32rem; margin-bottom: 3rem; }
+.home-tag { margin-bottom: 2rem; font-size: 10px; }
+.home-name {
+  font-size: clamp(2.25rem, 6vw, 4.5rem);
+  margin-bottom: 1rem;
+  transition: font-size 0.7s cubic-bezier(0.65, 0, 0.35, 1), margin 0.7s;
+}
+.home-sub { font-size: 12px; letter-spacing: 0.35em; max-width: 32rem; margin-bottom: 2.5rem; }
 .home-cta { font-size: 11px; letter-spacing: 0.2em; }
+.home-tag, .home-sub, .home-cta { transition: all 0.7s cubic-bezier(0.65, 0, 0.35, 1); }
+.home-scroll { transition: opacity 0.4s; }
+
+/* shrunk (phone sizes) */
+.is-shrunk .home-inner { padding: 0 14px; }
+.is-shrunk .home-name { font-size: 1.25rem; margin-bottom: 0.5rem; }
+.is-shrunk .home-tag { margin-bottom: 0.75rem; }
+.is-shrunk .home-tag span { letter-spacing: 0.2em; font-size: 8px; }
+.is-shrunk .home-sub { display: none; }
+.is-shrunk .home-cta { font-size: 10px; }
+.is-shrunk .home-scroll { opacity: 0; pointer-events: none; }
 
 @media (min-width: 1100px) {
-  .home-panel {
-    position: fixed;
-    z-index: 30;
-    top: 0;
-    left: 0;
-    width: 100vw;
-    height: 100svh;
-    min-height: 0;
-    border-bottom-right-radius: 0;
-    background: none; /* background now lives on ::after so only it fades */
-    transition:
-      top 0.7s cubic-bezier(0.65, 0, 0.35, 1),
-      left 0.7s cubic-bezier(0.65, 0, 0.35, 1),
-      width 0.7s cubic-bezier(0.65, 0, 0.35, 1),
-      height 0.7s cubic-bezier(0.65, 0, 0.35, 1),
-      border-radius 0.7s cubic-bezier(0.65, 0, 0.35, 1),
-      box-shadow 0.7s;
-  }
-  .home-panel.is-shrunk {
-    top: var(--nav-h);
-    left: var(--edge);
-    width: var(--pw);
-    height: var(--ph);
-    border-bottom-right-radius: 42% 58%;
-    box-shadow: none; /* no outline / shadow on the top or left side */
-  }
+  .home-inner { padding: 0 clamp(32px, 8vw, 128px); }
+  .home-tag { margin-bottom: 2.5rem; }
+  .home-sub { margin-bottom: 3rem; }
 
-  /* background layer: fades out toward the TOP and LEFT edges when shrunk,
-     so no box edge shows on the upper-left side */
-  .home-panel::after {
-    z-index: -1;
-    opacity: 1;
-    background:
-      linear-gradient(150deg, rgba(96, 165, 250, calc(0.22 * var(--t))), rgba(96, 165, 250, calc(0.04 * var(--t)))),
-      radial-gradient(ellipse at top, #144e5a 0%, #061920 45%, #020b10 100%);
-    -webkit-mask-image:
-      linear-gradient(to bottom, transparent 0, #000 var(--fade)),
-      linear-gradient(to right, transparent 0, #000 var(--fade));
-    -webkit-mask-composite: source-in;
-    mask-image:
-      linear-gradient(to bottom, transparent 0, #000 var(--fade)),
-      linear-gradient(to right, transparent 0, #000 var(--fade));
-    mask-composite: intersect;
-    transition:
-      --fade 0.7s cubic-bezier(0.65, 0, 0.35, 1),
-      --t 0.7s;
-  }
-  .home-panel.is-shrunk::after {
-    --fade: 160px;
-    --t: 1;
-  }
-
-  /* border only on the bottom and the curved bottom-right edge,
-     fading out toward the top so nothing shows on the upper side */
-  .home-panel::before {
-    content: '';
-    position: absolute;
-    inset: 0;
-    z-index: 5;
-    pointer-events: none;
-    border-bottom: 1px solid rgba(125, 190, 255, 0.55);
-    border-right: 1px solid rgba(125, 190, 255, 0.55);
-    border-bottom-right-radius: 42% 58%;
-    -webkit-mask-image:
-      linear-gradient(to bottom, transparent 35%, #000 65%),
-      linear-gradient(to right, transparent 0, #000 140px);
-    -webkit-mask-composite: source-in;
-    mask-image:
-      linear-gradient(to bottom, transparent 35%, #000 65%),
-      linear-gradient(to right, transparent 0, #000 140px);
-    mask-composite: intersect;
-    opacity: 0;
-    transition: opacity 0.7s;
-  }
-  .home-panel.is-shrunk::before { opacity: 1; }
-
-  .home-inner { transition: padding 0.7s cubic-bezier(0.65, 0, 0.35, 1); }
-  .home-name { transition: font-size 0.7s cubic-bezier(0.65, 0, 0.35, 1), margin 0.7s; }
-  .home-tag, .home-sub, .home-cta { transition: all 0.7s cubic-bezier(0.65, 0, 0.35, 1); }
-  .home-scroll { transition: opacity 0.4s; }
-
-  .is-shrunk .home-inner { padding: 0 28px; }
-  .is-shrunk .home-name { font-size: 1.9rem; margin-bottom: 0.5rem; }
-  .is-shrunk .home-tag { margin-bottom: 1rem; font-size: 9px; }
-  .is-shrunk .home-sub { font-size: 9px; letter-spacing: 0.25em; margin-bottom: 1.5rem; }
-  .is-shrunk .home-cta { font-size: 10px; }
-  .is-shrunk .home-scroll { opacity: 0; pointer-events: none; }
+  /* shrunk (desktop sizes) */
+  .is-shrunk .home-inner { padding: 0 56px; }
+  .is-shrunk .home-name { font-size: 2.6rem; margin-bottom: 0.75rem; }
+  .is-shrunk .home-tag { margin-bottom: 1.25rem; }
+  .is-shrunk .home-tag span { letter-spacing: 0.5em; font-size: inherit; }
+  .is-shrunk .home-sub { display: block; font-size: 10px; letter-spacing: 0.25em; margin-bottom: 1.75rem; }
+  .is-shrunk .home-cta { font-size: 11px; }
 }
 
 /* ---------- Sections ---------- */
+.page { padding: 0 var(--edge); }
+
 .sec {
-  padding: 5rem 24px;
+  display: grid;
+  grid-template-columns: var(--pw) minmax(0, 1fr);
+  column-gap: 12px;
+  min-height: 100svh;
+  padding: calc(var(--nav-h) + 1rem) 0 4rem;
+  max-width: 90rem;
+  margin: 0 auto;
 }
 .sec-title { margin-bottom: 2rem; }
-.sec-body { min-width: 0; }
+.sec-body { min-width: 0; grid-column: 2; padding-top: 12px; padding-right: 4px; }
 
-@media (min-width: 1100px) {
-  .page { padding: 0 var(--edge); }
-  .sec {
-    display: grid;
-    grid-template-columns: var(--pw) minmax(0, 1fr);
-    column-gap: calc(var(--gap) + 24px);
-    min-height: 100svh;
-    padding: calc(var(--nav-h) + 2rem) 0 6rem;
-    max-width: 90rem;
-    margin: 0 auto;
-  }
+/* The title is pinned directly UNDER the Home panel and shown only for the
+   section being read (.is-active, set by usePanelScroll). */
+.sec-title {
+  position: fixed;
+  z-index: 20;
+  left: 14px;
+  top: calc(var(--ph) + var(--gap) + 12px);
+  width: calc(var(--pw) - 28px);
+  margin: 0;
+  padding: 0;
+  opacity: 0;
+  pointer-events: none;
+  transition: opacity 0.3s ease;
+}
+.sec-title h2 { font-size: 1.5rem; }
+.sec-title span { letter-spacing: 0.2em !important; }
 
-  /* The content always lives in the right column. */
-  .sec-body { grid-column: 2; padding-top: 12px; padding-right: 4px; }
-
-  /* The title ("My Story / About") is pinned directly UNDER the Home panel.
-     It is shown only for the section currently being read (.is-active, set by
-     usePanelScroll) so it stays until that section has fully scrolled away,
-     and it never goes behind / over the Home panel. It does not depend on
-     position: sticky, so overflow on parent wrappers can't break it. */
-  .sec-title {
-    position: fixed;
-    z-index: 20;
-    left: calc(var(--edge) + 4px);
-    top: calc(var(--nav-h) + var(--ph) + var(--gap));
-    width: calc(var(--pw) - 8px);
-    margin: 0;
-    padding: 0;
-    opacity: 0;
-    pointer-events: none;
-    transition: opacity 0.3s ease;
-  }
-  .panel-shrunk .sec.is-active .sec-title {
-    opacity: 1;
-    pointer-events: auto;
-    /* wait until the Home panel has finished shrinking, then fade in */
-    transition: opacity 0.4s ease 0.4s;
-  }
+.panel-shrunk .sec.is-active .sec-title {
+  opacity: 1;
+  pointer-events: auto;
+  /* wait until the Home panel has finished shrinking, then fade in */
+  transition: opacity 0.4s ease 0.4s;
 }
 
-/* ---------- Colour-coded blocks (blue / lavender / mint from the wireframe) ---------- */
-.card-violet {
-  background: rgba(139, 120, 255, 0.10);
-  border: 1px solid rgba(167, 150, 255, 0.35);
+@media (min-width: 1100px) {
+  .sec {
+    column-gap: calc(var(--gap) + 24px);
+    padding: calc(var(--nav-h) + 2rem) 0 6rem;
+  }
+  .sec-title { left: 56px; width: calc(var(--pw) - 88px); }
+  .sec-title h2 { font-size: 3rem; }
+  .sec-title span { letter-spacing: 0.5em !important; }
+}
+
+/* ---------- Soft grey blocks (cards, skill tiles, buttons) ---------- */
+.card-soft {
+  background: #f0f0f0;
+  border: 1px solid #b0b0b0;
   border-radius: 1rem;
   transition: background 0.4s, border-color 0.4s, transform 0.4s;
 }
-.card-violet:hover {
-  background: rgba(139, 120, 255, 0.16);
-  border-color: rgba(190, 175, 255, 0.6);
+.card-soft:hover {
+  background: #eaeaea;
+  border-color: #333333;
 }
-.tile-mint {
-  background: rgba(52, 211, 153, 0.08);
-  border: 1px solid rgba(52, 211, 153, 0.4);
+.tile-soft {
+  background: #f0f0f0;
+  border: 1px solid #b0b0b0;
   border-radius: 1rem;
   transition: transform 0.4s, background 0.4s, border-color 0.4s;
 }
-.tile-mint:hover {
+.tile-soft:hover {
   transform: translateY(-6px);
-  background: rgba(52, 211, 153, 0.14);
-  border-color: rgba(110, 231, 183, 0.8);
+  background: #eaeaea;
+  border-color: #333333;
 }
-.tile-mint-solid {
-  background: rgb(110, 231, 183);
-  color: #03221a;
+.tile-solid {
+  background: #333333;
+  color: #ffffff;
 }

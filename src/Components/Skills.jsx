@@ -15,55 +15,20 @@ import {
   SiSharp,
 } from 'react-icons/si';
 
+// Icons are one charcoal colour to match the Elegant Minimalism palette.
 const skillSet = [
-  {
-    name: 'HTML5',
-    icon: <SiHtml5 className="text-orange-600" />,
-  },
-  {
-    name: 'CSS3',
-    icon: <SiCss3 className="text-blue-500" />,
-  },
-  {
-    name: 'JavaScript',
-    icon: <SiJavascript className="text-yellow-400" />,
-  },
-  {
-    name: 'React.js',
-    icon: <SiReact className="text-cyan-400" />,
-  },
-  {
-    name: 'Tailwind CSS',
-    icon: <SiTailwindcss className="text-cyan-500" />,
-  },
-  {
-    name: 'Node.js',
-    icon: <SiNodedotjs className="text-green-500" />,
-  },
-  {
-    name: 'Express.js',
-    icon: <SiExpress className="text-white" />,
-  },
-  {
-    name: 'C#',
-    icon: <SiSharp className="text-purple-500" />,
-  },
-  {
-    name: '.NET',
-    icon: <SiDotnet className="text-purple-400" />,
-  },
-  {
-    name: 'MySQL',
-    icon: <SiMysql className="text-blue-400" />,
-  },
-  {
-    name: 'PostgreSQL',
-    icon: <SiPostgresql className="text-blue-500" />,
-  },
-  {
-    name: 'Git',
-    icon: <SiGit className="text-orange-500" />,
-  },
+  { name: 'HTML5', icon: <SiHtml5 /> },
+  { name: 'CSS3', icon: <SiCss3 /> },
+  { name: 'JavaScript', icon: <SiJavascript /> },
+  { name: 'React.js', icon: <SiReact /> },
+  { name: 'Tailwind CSS', icon: <SiTailwindcss /> },
+  { name: 'Node.js', icon: <SiNodedotjs /> },
+  { name: 'Express.js', icon: <SiExpress /> },
+  { name: 'C#', icon: <SiSharp /> },
+  { name: '.NET', icon: <SiDotnet /> },
+  { name: 'MySQL', icon: <SiMysql /> },
+  { name: 'PostgreSQL', icon: <SiPostgresql /> },
+  { name: 'Git', icon: <SiGit /> },
 ];
 
 const Skills = () => (
@@ -72,13 +37,13 @@ const Skills = () => (
       {skillSet.map((skill) => (
         <div
           key={skill.name}
-          className="tile-mint group flex flex-col items-center justify-center py-8 px-4"
+          className="tile-soft group flex flex-col items-center justify-center py-8 px-4"
         >
-          <div className="text-4xl mb-4 transition-transform duration-500 group-hover:scale-110">
+          <div className="text-4xl mb-4 text-[#333333] transition-transform duration-500 group-hover:scale-110">
             {skill.icon}
           </div>
 
-          <span className="text-xs font-bold text-emerald-100/80 group-hover:text-white transition-colors uppercase tracking-widest text-center">
+          <span className="text-xs font-bold text-[#333333] uppercase tracking-widest text-center">
             {skill.name}
           </span>
         </div>
@@ -86,7 +51,7 @@ const Skills = () => (
     </div>
 
     {/* Additional Skills */}
-    <div className="mt-10 pt-8 border-t border-white/10">
+    <div className="mt-10 pt-8 border-t border-[#b0b0b0]">
       <div className="flex flex-wrap gap-3 justify-center">
         {[
           'REST APIs',
@@ -100,7 +65,7 @@ const Skills = () => (
         ].map((skill) => (
           <span
             key={skill}
-            className="px-4 py-2 rounded-full border border-white/10 bg-white/[0.03] text-gray-400 text-xs font-medium tracking-wide hover:text-white hover:border-cyan-400/30 transition-colors"
+            className="px-4 py-2 rounded-full border border-[#b0b0b0] bg-white text-[#707070] text-xs font-medium tracking-wide hover:text-[#333333] hover:border-[#333333] transition-colors"
           >
             {skill}
           </span>

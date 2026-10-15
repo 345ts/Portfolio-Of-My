@@ -6,14 +6,14 @@ const Section = ({ id, title, eyebrow, side, children }) => (
     <div className="sec-side">
       <div className="sec-title">
         <div className="flex items-center space-x-3 mb-3">
-          <div className="w-8 h-[1px] bg-cyan-500"></div>
-          <span className="text-[10px] tracking-[0.5em] text-cyan-500 uppercase font-black">
+          <div className="w-8 h-[1px] bg-[#333333]"></div>
+          <span className="text-[10px] tracking-[0.5em] text-[#707070] uppercase font-black">
             {eyebrow}
           </span>
         </div>
-        <h2 className="text-4xl xl:text-5xl font-black text-white tracking-tighter">
+        <h2 className="text-4xl xl:text-5xl font-black text-[#333333] tracking-tighter">
           {title}
-          <span className="text-cyan-500">.</span>
+          <span className="text-[#707070]">.</span>
         </h2>
         {side && <div className="mt-6">{side}</div>}
       </div>

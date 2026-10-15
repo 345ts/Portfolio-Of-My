@@ -41,11 +41,11 @@ const Contact = () => {
   }; // One closing brace for sendEmail
 
   const socialCls =
-    'p-3 rounded-xl bg-white/5 border border-white/10 text-gray-400 hover:text-emerald-300 hover:border-emerald-300/50 transition-all';
+    'p-3 rounded-xl bg-[#f0f0f0] border border-[#b0b0b0] text-[#707070] hover:text-[#333333] hover:border-[#333333] transition-all';
   const fieldCls =
-    'w-full p-4 bg-white/[0.04] border border-white/10 rounded-xl text-white focus:border-emerald-300/60 transition-all outline-none';
+    'w-full p-4 bg-[#f0f0f0] border border-[#b0b0b0] rounded-xl text-[#333333] focus:border-[#333333] transition-all outline-none';
   const labelCls =
-    'text-[10px] uppercase font-bold tracking-widest text-gray-500 ml-1';
+    'text-[10px] uppercase font-bold tracking-widest text-[#707070] ml-1';
 
   return (
     <Section
@@ -105,8 +105,8 @@ const Contact = () => {
           disabled={loading}
           className={`px-10 py-4 font-black uppercase tracking-[0.2em] text-xs rounded-xl transition-all ${
             loading
-              ? 'bg-gray-700 text-gray-400'
-              : 'tile-mint-solid hover:shadow-[0_0_30px_rgba(52,211,153,0.35)]'
+              ? 'bg-[#b0b0b0] text-[#707070]'
+              : 'tile-solid hover:shadow-[0_8px_24px_rgba(51,51,51,0.25)]'
           }`}
         >
           {loading ? 'Transmitting...' : 'Send Message'}
@@ -115,7 +115,7 @@ const Contact = () => {
         {status.msg && (
           <p
             className={`text-[10px] uppercase tracking-widest font-bold ${
-              status.type === 'success' ? 'text-emerald-300' : 'text-red-500'
+              status.type === 'success' ? 'text-[#333333]' : 'text-red-600'
             }`}
           >
             {status.msg}

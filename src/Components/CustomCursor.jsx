@@ -1,5 +1,7 @@
 import React, { useEffect, useState } from 'react';
 
+// White ring + dot with mix-blend-difference: it shows dark on the white page
+// and turns light when it passes over the charcoal Home panel.
 const CustomCursor = () => {
   const [position, setPosition] = useState({ x: 0, y: 0 });
   const [isHovering, setIsHovering] = useState(false);
@@ -33,7 +35,7 @@ const CustomCursor = () => {
 
   return (
     <div
-      className="fixed top-0 left-0 pointer-events-none z-[9999] transition-transform duration-100 ease-out hidden md:block"
+      className="fixed top-0 left-0 pointer-events-none z-[9999] mix-blend-difference transition-transform duration-100 ease-out hidden md:block"
       style={{
         left: `${position.x}px`,
         top: `${position.y}px`,
@@ -42,14 +44,14 @@ const CustomCursor = () => {
     >
       {/* Outer Ring */}
       <div
-        className={`absolute inset-0 rounded-full border border-cyan-500/50 transition-all duration-500 ease-out ${
-          isHovering ? 'w-16 h-16 bg-cyan-500/10 border-cyan-400' : 'w-10 h-10'
+        className={`absolute inset-0 rounded-full border border-white/70 transition-all duration-500 ease-out ${
+          isHovering ? 'w-16 h-16 bg-white/20 border-white' : 'w-10 h-10'
         } -translate-x-1/2 -translate-y-1/2`}
       />
 
       {/* Center Dot */}
       <div
-        className={`w-1 h-1 bg-cyan-400 rounded-full -translate-x-1/2 -translate-y-1/2 transition-opacity duration-300 ${
+        className={`w-1 h-1 bg-white rounded-full -translate-x-1/2 -translate-y-1/2 transition-opacity duration-300 ${
           isHovering ? 'opacity-0' : 'opacity-100'
         }`}
       />
